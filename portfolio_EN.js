@@ -24,4 +24,3 @@ function renderProjectsEN(projects) {
 }
 
 document.addEventListener("DOMContentLoaded", loadProjectsEN);
-document.addEventListener("DOMContentLoaded", renderProjectsEN);
