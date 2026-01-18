@@ -1,0 +1,64 @@
+{
+    "name": "Mirel Volcán Calderón",
+    "title": "Web Developer | CRM Specialist | Environmental Data Analyst",
+    "summary": "Professional with over 20 years of experience across diverse environments, combining technology, sustainability and strategy. Specialized in web development, CRM solutions and environmental data analysis.",
+    
+    "skills": [
+        "Web development: HTML, CSS, JavaScript",
+        "CRM and automation: Salesforce, Trailhead, Odoo",
+        "Data analysis and GIS: QGIS, ArcGIS, geospatial tools",
+        "Project management and multidisciplinary team facilitation",
+        "Linux environments, Git and version control"
+    ],
+
+    "experience": [
+        {
+            "role": "Environmental Researcher",
+            "description": "Conducted socio-environmental research, consumer preference modeling and sustainability-focused studies.",
+            "tools": ["Python", "R", "C", "iTree Eco", "iNaturalist", "RBIS", "Sentinel 5P"]
+        },
+        {
+            "role": "CRM Specialist",
+            "description": "Salesforce Ranger with certifications in Associate, Administrator, Platform App Builder and Service Cloud.",
+            "tools": ["Salesforce", "Odoo", "Process automation"]
+        }
+    ],
+
+    "publications": [
+        {
+            "title": "From Scientific Research to CRM with Environmental Purpose",
+            "description": "International publication based on my master's research analyzing consumer preferences for ecolabeled and organic products in Costa Rica using Choice Experiments.",
+            "details": {
+                "journal": "Quarterly Journal of International Agriculture",
+                "volume": "44",
+                "issue": "4",
+                "pages": "381–397",
+                "year": 2005,
+                "coauthor": "Dr. Robert Hearne",
+                "origin": "Based on master's thesis",
+                "url": "https://repositorio.catie.ac.cr/handle/11554/4512?show=full"
+            },
+            "tech_relation": {
+                "languages_used": ["Python", "R", "C"],
+                "applications": [
+                    "Statistical data analysis",
+                    "Preference modeling",
+                    "Automation of environmental research processes"
+                ]
+            },
+            "environmental_experience": {
+                "tools": ["iTree Eco", "iNaturalist", "RBIS", "Sentinel 5P"],
+                "context": "Participation in projects with PDVSA, USAID, BID and universities, integrating citizen science, spatial data and conservation."
+            },
+            "crm_transition": {
+                "salesforce_certifications": [
+                    "Associate",
+                    "Administrator",
+                    "Platform App Builder",
+                    "Service Cloud"
+                ],
+                "description": "Applying technical and analytical background to CRM solution design with environmental impact."
+            }
+        }
+    ]
+}
