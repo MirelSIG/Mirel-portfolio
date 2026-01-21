@@ -1,8 +1,8 @@
 # 🌐 Proyectos desplegados
 
-### **E‑commerce**
-- 🔗 Proyecto: https://mirelsig.github.io/e-commerce/
-- 💻 Código: https://github.com/MirelSIG/e-commerce
+### **Online‑commerce**
+- 🔗 Proyecto: [https://mirelsig.github.io/Online-commerce/]
+- 💻 Código: https://github.com/MirelSIG/Online-commerce
 
 ### **Gourmet on the Go**
 - 🔗 Proyecto: https://mirelsig.github.io/Gourmet-on-the-Go/
