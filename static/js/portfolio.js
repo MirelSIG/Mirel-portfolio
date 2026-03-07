@@ -27,37 +27,101 @@ toggle.onclick = () => {
 
 
 // -----------------------------
-// WIDGET DE CHAT
+// WIDGET DE CHAT (refactor: UI vs HTTP client)
 // -----------------------------
-document.getElementById("chat-widget-send").onclick = async () => {
-    const input = document.getElementById("chat-widget-input");
-    const text = input.value.trim();
-    if (!text) return;
+const chatSendBtn = document.getElementById("chat-widget-send");
 
-    const body = document.getElementById("chat-body");
+// --- UI helpers (pure DOM manipulation) ---
+function getChatBody() {
+    return document.getElementById('chat-body');
+}
 
-    // Mensaje del usuario
-    body.innerHTML += `<div class="chat-msg-user">${text}</div>`;
+function renderUserMessage(text) {
+    const body = getChatBody();
+    if (!body) return;
+    body.insertAdjacentHTML('beforeend', `<div class="chat-msg-user">${text}</div>`);
     body.scrollTop = body.scrollHeight;
+}
 
-    input.value = "";
+function renderBotMessage(text) {
+    const body = getChatBody();
+    if (!body) return;
+    body.insertAdjacentHTML('beforeend', `<div class="chat-msg-bot">${text}</div>`);
+    body.scrollTop = body.scrollHeight;
+}
 
-    try {
-        const res = await fetch(`${API}/preguntar`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ pregunta: text })
-        });
-
-        const data = await res.json();
-
-        body.innerHTML += `<div class="chat-msg-bot">${data.respuesta}</div>`;
-        body.scrollTop = body.scrollHeight;
-
-    } catch (error) {
-        body.innerHTML += `<div class="chat-msg-bot">Error conectando con el servidor.</div>`;
+function showLoading() {
+    const body = getChatBody();
+    if (!body) return null;
+    let loading = document.getElementById('chat-loading');
+    if (!loading) {
+        loading = document.createElement('div');
+        loading.id = 'chat-loading';
+        loading.innerHTML = `<div class="spinner"></div>`;
+        body.appendChild(loading);
     }
-};
+    loading.style.display = 'flex';
+    body.scrollTop = body.scrollHeight;
+    return loading;
+}
+
+function hideLoading(loadingEl) {
+    if (loadingEl) loadingEl.style.display = 'none';
+}
+
+function renderError(message, retryCallback) {
+    const body = getChatBody();
+    if (!body) return;
+    const errDiv = document.createElement('div');
+    errDiv.className = 'chat-error';
+    errDiv.textContent = message;
+    const retry = document.createElement('a');
+    retry.className = 'chat-retry';
+    retry.textContent = 'Reintentar';
+    retry.onclick = retryCallback;
+    errDiv.appendChild(document.createElement('br'));
+    errDiv.appendChild(retry);
+    body.appendChild(errDiv);
+    body.scrollTop = body.scrollHeight;
+}
+
+// --- HTTP client (testable) ---
+async function sendQuestion(text) {
+    const res = await fetch(`${API}/qa?question=${encodeURIComponent(text)}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return typeof data === 'string' ? data : (data.answer || data.respuesta || data.example_answer || JSON.stringify(data));
+}
+
+// --- Wiring ---
+if (chatSendBtn) {
+    chatSendBtn.onclick = async () => {
+        const input = document.getElementById('chat-widget-input');
+        if (!input) return;
+        const text = input.value.trim();
+        if (!text) return;
+
+        renderUserMessage(text);
+        input.value = '';
+
+        const loadingEl = showLoading();
+        chatSendBtn.disabled = true;
+
+        try {
+            const answer = await sendQuestion(text);
+            hideLoading(loadingEl);
+            renderBotMessage(answer);
+        } catch (err) {
+            hideLoading(loadingEl);
+            renderError('No se pudo obtener respuesta del servidor.', () => {
+                // retry: simulate user clicking send again
+                chatSendBtn.click();
+            });
+        } finally {
+            chatSendBtn.disabled = false;
+        }
+    };
+}
 
 
 // -----------------------------
@@ -75,6 +139,9 @@ launcher.onclick = () => {
 // PROYECTOS
 // -----------------------------
 async function loadProjects() {
+    const container = document.getElementById("projects-container");
+    if (!container) return; // nothing to do on pages without projects
+
     try {
         const response = await fetch(`${API}/proyectos`);
         const projects = await response.json();

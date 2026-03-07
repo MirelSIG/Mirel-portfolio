@@ -24,4 +24,6 @@ const projects_en = [
         repo: "https://github.com/MirelSIG/SweetLab"
     }
 ];
-export default projects_en;
+
+// Expose as a global fallback for pages that include this script directly
+window.PROJECTS_EN = projects_en;

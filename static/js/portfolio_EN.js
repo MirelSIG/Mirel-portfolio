@@ -1,7 +1,25 @@
+// Detect environment: local or deployed
+const API =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+        ? "http://127.0.0.1:8000"
+        : "/api";
+
 async function loadProjectsEN() {
-    const response = await fetch("https://mirel-api.onrender.com/proyectos");
-    const projects = await response.json();
-    renderProjectsEN(projects);
+    const container = document.getElementById("projects-container");
+    if (!container) return; // not on a page that needs projects
+
+    try {
+        const response = await fetch(`${API}/proyectos`);
+        const projects = await response.json();
+        renderProjectsEN(projects);
+    } catch (err) {
+        console.error("Error loading projects (EN):", err);
+        // fallback to embedded list if available
+        if (window.PROJECTS_EN) {
+            renderProjectsEN(window.PROJECTS_EN);
+        }
+    }
 }
 
 function renderProjectsEN(projects) {
