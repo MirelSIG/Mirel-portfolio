@@ -7,6 +7,14 @@ const API = (window.location.hostname === "localhost" || window.location.hostnam
 // Debug: show which API origin the client will use (visible in DevTools)
 console.log('API ->', API);
 
+// Global error handler to avoid silent script termination
+window.addEventListener('error', (ev) => {
+    console.error('Global error caught:', ev.error || ev.message, ev);
+});
+window.addEventListener('unhandledrejection', (ev) => {
+    console.error('Unhandled promise rejection:', ev.reason);
+});
+
 
 // -----------------------------
 // PANEL LATERAL
