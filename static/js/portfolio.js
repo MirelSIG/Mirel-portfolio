@@ -96,7 +96,15 @@ function renderError(message, retryCallback) {
 // --- HTTP client (testable) ---
 async function sendQuestion(text) {
     const res = await fetch(`${API}/qa?question=${encodeURIComponent(text)}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.ok) {
+        // try to capture response body for debugging
+        let bodyText = '';
+        try { bodyText = await res.text(); } catch (e) { bodyText = '<unable to read body>'; }
+        const err = new Error(`HTTP ${res.status}: ${bodyText}`);
+        err.status = res.status;
+        err.body = bodyText;
+        throw err;
+    }
     const data = await res.json();
     return typeof data === 'string' ? data : (data.answer || data.respuesta || data.example_answer || JSON.stringify(data));
 }
@@ -121,7 +129,9 @@ if (chatSendBtn) {
             renderBotMessage(answer);
         } catch (err) {
             hideLoading(loadingEl);
-            renderError('No se pudo obtener respuesta del servidor.', () => {
+            console.error('sendQuestion error:', err);
+            const msg = err && err.message ? `Error: ${err.message}` : 'No se pudo obtener respuesta del servidor.';
+            renderError(msg, () => {
                 // retry: simulate user clicking send again
                 chatSendBtn.click();
             });
@@ -214,9 +224,11 @@ if (inlineSend) {
                 hideLoading(loadingEl);
                 renderBotMessage(answer);
             })
-            .catch(() => {
+            .catch((err) => {
                 hideLoading(loadingEl);
-                renderError('No se pudo obtener respuesta del servidor.', () => inlineSend.click());
+                console.error('inline sendQuestion error:', err);
+                const msg = err && err.message ? `Error: ${err.message}` : 'No se pudo obtener respuesta del servidor.';
+                renderError(msg, () => inlineSend.click());
             })
             .finally(() => { inlineSend.disabled = false; });
     });
