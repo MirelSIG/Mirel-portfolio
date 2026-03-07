@@ -3,6 +3,10 @@
 ### **Online‑commerce**
 - 🔗 Proyecto: [https://mirelsig.github.io/Online-commerce/]
 - 💻 Código: https://github.com/MirelSIG/Online-commerce
+  
+> Updated links (user provided):
+- 🔗 Proyecto: https://mirelsig.github.io/Online-commerce/
+- 💻 Código: https://github.com/MirelSIG/Online-commerce
 
 ### **Gourmet on the Go**
 - 🔗 Proyecto: https://mirelsig.github.io/Gourmet-on-the-Go/

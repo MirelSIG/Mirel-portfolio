@@ -11,15 +11,15 @@
 
     <!-- SIDEBAR -->
     <div id="sidebar">
-        <h3>Endpoints API</h3>
+        <h3>Contenidos</h3>
         <ul>
-            <li><a href="https://mirel-api.onrender.com/perfil" rel="noopener noreferrer" target="_blank">/perfil</a></li>
-            <li><a href="https://mirel-api.onrender.com/experiencia" rel="noopener noreferrer" target="_blank">/experiencia</a></li>
-            <li><a href="https://mirel-api.onrender.com/habilidades" rel="noopener noreferrer" target="_blank">/habilidades</a></li>
-            <li><a href="https://mirel-api.onrender.com/educacion" rel="noopener noreferrer" target="_blank">/educacion</a></li>
-            <li><a href="https://mirel-api.onrender.com/publicaciones" rel="noopener noreferrer" target="_blank">/publicaciones</a></li>
-            <li><a href="https://mirel-api.onrender.com/resumen" rel="noopener noreferrer" target="_blank">/resumen</a></li>
-            <li><a href="https://mirel-api.onrender.com/docs" rel="noopener noreferrer" target="_blank">Swagger Docs</a></li>
+            <li><a href="https://mirel-api.onrender.com/perfil" rel="noopener noreferrer" target="_blank">Perfil</a></li>
+            <li><a href="https://mirel-api.onrender.com/experiencia" rel="noopener noreferrer" target="_blank">Experiencia</a></li>
+            <li><a href="https://mirel-api.onrender.com/habilidades" rel="noopener noreferrer" target="_blank">Habilidades</a></li>
+            <li><a href="https://mirel-api.onrender.com/educacion" rel="noopener noreferrer" target="_blank">Educación</a></li>
+            <li><a href="https://mirel-api.onrender.com/publicaciones" rel="noopener noreferrer" target="_blank">Publicaciones</a></li>
+            <li><a href="https://mirel-api.onrender.com/resumen" rel="noopener noreferrer" target="_blank">Resumen</a></li>
+            <li><a href="https://mirel-api.onrender.com/docs" rel="noopener noreferrer" target="_blank">Documentación (Swagger)</a></li>
         </ul>
     </div>
 
@@ -34,6 +34,16 @@
             <h3>Desarrolladora Web | HTML | CSS | JavaScript | Salesforce | Odoo</h3>
             <div><a href="/en" class="lang-switch">English</a></div>
         </header>
+
+        <!-- INLINE CHAT INPUT (moved here for consistent placement) -->
+        <div id="chat-inline" style="max-width:900px;margin:20px auto 0;">
+            <div id="chat-inline-header" style="font-weight:bold;margin-bottom:8px;">Asistente de Mirel</div>
+            <div id="chat-inline-body" style="min-height:80px;padding:8px;background:#fff;border-radius:8px;border:1px solid #e6e6e6;margin-bottom:8px;overflow:auto;"></div>
+            <div id="chat-inline-input-area" style="display:flex;gap:8px;">
+                <input type="text" id="chat-inline-input" placeholder="Pregúntame sobre mi experiencia, habilidades o proyectos..." style="flex:1;padding:10px;border-radius:6px;border:1px solid #ccc;" />
+                <button id="chat-inline-send" style="background:#4a90e2;color:#fff;border:none;padding:10px 14px;border-radius:6px;cursor:pointer;">Enviar</button>
+            </div>
+        </div>
 
         <main>
 
@@ -86,7 +96,37 @@
 <!-- PROYECTOS -->
     <section id="proyectos">
         <h2>Mis Proyectos</h2>
-        <div id="projects-container"></div>
+        <div id="projects-container">
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Online-commerce</h3>
+                    <p>Aplicación web de Online-commerce con catálogo dinámico y diseño responsivo.</p>
+                    <a href="https://mirelsig.github.io/Online-commerce/" rel="noopener noreferrer" target="_blank">Ver proyecto</a>
+                    <a href="https://github.com/MirelSIG/Online-commerce" rel="noopener noreferrer" target="_blank">Código en GitHub</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Gourmet on the Go</h3>
+                    <p>Plataforma culinaria con recetas y navegacion intuitiva.</p>
+                    <a href="https://mirelsig.github.io/Gourmet-on-the-Go/" rel="noopener noreferrer" target="_blank">Ver proyecto</a>
+                    <a href="https://github.com/MirelSIG/Gourmet-on-the-Go" rel="noopener noreferrer" target="_blank">Cdigo en GitHub</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Sitio Web Deportivo Surf</h3>
+                    <p>Sitio tematico sobre surf con diseno visual atractivo y estructura orientada a contenido deportivo.</p>
+                    <a href="https://mirelsig.github.io/sitioWebDeportivoSurf/" rel="noopener noreferrer" target="_blank">Ver proyecto</a>
+                    <a href="https://github.com/MirelSIG/sitioWebDeportivoSurf" rel="noopener noreferrer" target="_blank">Cdigo en GitHub</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>SweetLab (en construccion)</h3>
+                    <p>Laboratorio creativo para prototipos UI/UX y experimentacion web.</p>
+                    <a href="https://mirelsig.github.io/SweetLab/" rel="noopener noreferrer" target="_blank">Ver proyecto</a>
+                    <a href="https://github.com/MirelSIG/SweetLab" rel="noopener noreferrer" target="_blank">Código en GitHub</a>
+                </div>
+            </div>
+        </div>
     </section>
 
             <section>
@@ -101,20 +141,8 @@
         </main>
     </div>
 
-    <!-- WIDGET DE CHAT -->
-    <div id="chat-widget">
-        <div id="chat-header">Asistente de Mirel</div>
-        <div id="chat-body"></div>
-        <div id="chat-input-area">
-            <input type="text" id="chat-widget-input" placeholder="Pregúntame sobre mi experiencia, habilidades o proyectos...">
-            <button id="chat-widget-send">➤</button>
-        </div>
-    </div>
+    <!-- (bottom duplicate chat-inline removed; main inline input is placed after header) -->
 
-    <!-- BOTÓN FLOTANTE -->
-    <div id="chat-launcher">💬</div>
-
-    <script src="/static/js/projects.js"></script>
     <script src="/static/js/portfolio.js"></script>
 </body>
 </html>

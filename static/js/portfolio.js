@@ -1,9 +1,8 @@
 // Detectar entorno: local o Render
-const API =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1"
-        ? "http://127.0.0.1:8000"
-        : "/api";
+// Use the page origin when running locally so fetch calls hit the same server
+const API = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? window.location.origin
+    : "/api";
 
 
 // -----------------------------
@@ -33,7 +32,7 @@ const chatSendBtn = document.getElementById("chat-widget-send");
 
 // --- UI helpers (pure DOM manipulation) ---
 function getChatBody() {
-    return document.getElementById('chat-body');
+    return document.getElementById('chat-body') || document.getElementById('chat-inline-body');
 }
 
 function renderUserMessage(text) {
@@ -125,14 +124,16 @@ if (chatSendBtn) {
 
 
 // -----------------------------
-// ABRIR / CERRAR WIDGET
+// ABRIR / CERRAR WIDGET (legacy modal: guarded)
 // -----------------------------
 const widget = document.getElementById("chat-widget");
 const launcher = document.getElementById("chat-launcher");
 
-launcher.onclick = () => {
-    widget.style.display = widget.style.display === "flex" ? "none" : "flex";
-};
+if (launcher && widget) {
+    launcher.onclick = () => {
+        widget.style.display = widget.style.display === "flex" ? "none" : "flex";
+    };
+}
 
 
 // -----------------------------
@@ -141,6 +142,9 @@ launcher.onclick = () => {
 async function loadProjects() {
     const container = document.getElementById("projects-container");
     if (!container) return; // nothing to do on pages without projects
+
+    // If static project cards already exist in the template, don't overwrite them
+    if (container.children && container.children.length > 0) return;
 
     try {
         const response = await fetch(`${API}/proyectos`);
@@ -171,3 +175,40 @@ function renderProjects(projects) {
 }
 
 document.addEventListener("DOMContentLoaded", loadProjects);
+
+// Wire inline chat inputs (if present) to the same handlers
+const inlineSend = document.getElementById('chat-inline-send');
+if (inlineSend) {
+    inlineSend.addEventListener('click', () => {
+        const input = document.getElementById('chat-inline-input');
+        if (!input) return;
+        const text = input.value.trim();
+        if (!text) return;
+        // reuse the widget flow by delegating to chatSendBtn logic if available
+        // otherwise call sendQuestion directly and render
+        if (typeof chatSendBtn !== 'undefined' && chatSendBtn) {
+            // populate the original input for compatibility (if exists)
+            const oldInput = document.getElementById('chat-widget-input');
+            if (oldInput) oldInput.value = text;
+            chatSendBtn.click();
+            input.value = '';
+            return;
+        }
+
+        // fallback: use inline UI and sendQuestion
+        renderUserMessage(text);
+        input.value = '';
+        const loadingEl = showLoading();
+        inlineSend.disabled = true;
+        sendQuestion(text)
+            .then(answer => {
+                hideLoading(loadingEl);
+                renderBotMessage(answer);
+            })
+            .catch(() => {
+                hideLoading(loadingEl);
+                renderError('No se pudo obtener respuesta del servidor.', () => inlineSend.click());
+            })
+            .finally(() => { inlineSend.disabled = false; });
+    });
+}

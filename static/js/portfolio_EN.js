@@ -1,9 +1,8 @@
 // Detect environment: local or deployed
-const API =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1"
-        ? "http://127.0.0.1:8000"
-        : "/api";
+// Use the page origin when running locally so fetch calls hit the same server
+const API = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? window.location.origin
+    : "/api";
 
 async function loadProjectsEN() {
     const container = document.getElementById("projects-container");

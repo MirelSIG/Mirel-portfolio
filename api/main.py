@@ -58,10 +58,10 @@ def get_projects():
     """Endpoint para obtener la lista de proyectos."""
     projects = [
         {
-            "title": "E‑commerce",
-            "description": "Aplicación web de comercio electrónico con catálogo dinámico y diseño responsivo.",
-            "url": "https://mirelsig.github.io/e-commerce/",
-            "repo": "https://github.com/MirelSIG/e-commerce"
+            "title": "Online-commerce",
+            "description": "Aplicación web de Online-commerce con catálogo dinámico y diseño responsivo.",
+            "url": "https://mirelsig.github.io/Online-commerce/",
+            "repo": "https://github.com/MirelSIG/Online-commerce"
         },
         {
             "title": "Gourmet on the Go",
