@@ -1,0 +1,254 @@
+{
+  "id": "mirel-profile-v1",
+
+  "personal_info": {
+    "full_name": "Mirel Marsoli Volcán Calderón",
+    "email": "mmvolcan@gmail.com",
+    "location": {
+      "city": "Barakaldo",
+      "region": "Euskadi",
+      "country": "España"
+    },
+    "nationalities": ["Venezolana", "Residencia legal España"],
+    "languages": {
+      "es": {
+        "español": "Nativo",
+        "inglés": "B2 - C1 según EFSET",
+        "francés": "Básico (B2)"
+      },
+      "en": {
+        "spanish": "Native",
+        "english": "B2–C1 (EFSET)",
+        "french": "Basic (B2)"
+      }
+    },
+    "links": {
+      "linkedin": "https://www.linkedin.com/in/tu-perfil",
+      "github": "https://github.com/tu-usuario",
+      "trailhead": "https://trailblazer.me/id/tu-id"
+    }
+  },
+
+  "summary": {
+    "es": [
+      "Especialista en automatización de procesos, análisis de datos y desarrollo de soluciones digitales.",
+      "Experiencia en Salesforce, Odoo, SIG, desarrollo en C y proyectos de impacto socioambiental.",
+      "Más de 20 años de experiencia combinando tecnología, sostenibilidad y estrategia empresarial.",
+      "Habilidad para coordinar equipos diversos, diseñar flujos CRM, integrar sistemas y liderar proyectos complejos."
+    ],
+    "en": [
+      "Professional with over 20 years of experience across diverse environments, combining technology, sustainability and strategy.",
+      "Specialized in web development, CRM solutions, environmental data analysis and digital process automation.",
+      "Experienced in Salesforce, Odoo, GIS, C programming and socio‑environmental projects.",
+      "Strong ability to coordinate multidisciplinary teams, design CRM workflows and lead complex projects."
+    ]
+  },
+
+  "skills": {
+    "technical": {
+      "es": [
+        "Salesforce Administration",
+        "Salesforce App Builder",
+        "Service Cloud",
+        "Salesforce AI Associate",
+        "Odoo (XML, QWeb, JS, modelos, vistas)",
+        "Automatización de procesos",
+        "Análisis de datos",
+        "SIG: QGIS, ArcGIS, Copernicus, iTree, Google Earth",
+        "Python",
+        "R",
+        "Webmapping",
+        "Git y control de versiones",
+        "Diseño de bases de datos",
+        "Desarrollo en C"
+      ],
+      "en": [
+        "Salesforce Administration",
+        "Salesforce App Builder",
+        "Service Cloud",
+        "Salesforce AI Associate",
+        "Odoo (XML, QWeb, JS, models, views)",
+        "Process automation",
+        "Data analysis",
+        "GIS: QGIS, ArcGIS, Copernicus, iTree, Google Earth",
+        "Python",
+        "R",
+        "Webmapping",
+        "Git and version control",
+        "Database design",
+        "C programming"
+      ]
+    },
+    "soft": {
+      "es": [
+        "Liderazgo colaborativo",
+        "Gestión de proyectos",
+        "Comunicación escrita",
+        "Pensamiento analítico",
+        "Docencia y facilitación",
+        "Adaptabilidad",
+        "Gestión de equipos multidisciplinarios"
+      ],
+      "en": [
+        "Collaborative leadership",
+        "Project management",
+        "Written communication",
+        "Analytical thinking",
+        "Teaching and facilitation",
+        "Adaptability",
+        "Multidisciplinary team coordination"
+      ]
+    }
+  },
+
+  "experience": [
+    {
+      "company": "Kernet Internet y Nuevas Tecnologías SL",
+      "role_es": "Prácticas Profesionales",
+      "role_en": "Professional Internship",
+      "location": "País Vasco, España",
+      "period": "Mayo 2025 - Julio 2025",
+      "responsibilities_es": [
+        "Diseño de tres módulos Odoo como onboarding técnico.",
+        "Manipulación avanzada de vistas cliente (XML, JS, QWeb) con lógica empresarial personalizada.",
+        "Extensión del módulo OCA stock_analytic para vincular movimientos de inventario con cuentas analíticas y proyectos."
+      ],
+      "responsibilities_en": [
+        "Designed three Odoo modules as technical onboarding.",
+        "Advanced manipulation of client views (XML, JS, QWeb) with custom business logic.",
+        "Extended OCA stock_analytic module to link inventory movements with analytic accounts and projects."
+      ],
+      "tags": ["Odoo", "Python", "QWeb", "XML", "JS", "ERP"]
+    },
+
+    {
+      "company": "USFS / USAID",
+      "role_es": "Freelancer",
+      "role_en": "Freelance Consultant",
+      "location": "República Dominicana",
+      "period": "Jul 2021 - Dic 2022",
+      "responsibilities_es": [
+        "Implementación de actividades de proyectos internacionales con apoyo técnico del Servicio Forestal de los EEUU.",
+        "Coordinación de iniciativas de desarrollo socioambiental."
+      ],
+      "responsibilities_en": [
+        "Implemented international project activities with technical support from the US Forest Service.",
+        "Coordinated socio‑environmental development initiatives."
+      ],
+      "tags": ["Cooperación internacional", "Proyectos", "USAID"]
+    },
+
+    {
+      "company": "INTEC",
+      "role_es": "Staff de Proyectos",
+      "role_en": "Project Staff",
+      "location": "República Dominicana",
+      "period": "Sep 2016 - Jun 2021",
+      "responsibilities_es": [
+        "Gestión y difusión de datos climáticos mediante red meteorológica nacional.",
+        "Coordinación de iniciativas tecnológicas con impacto social (iTree, iNaturalist).",
+        "Liderazgo en proyectos de infraestructura verde urbana.",
+        "Modelado y valoración económica de infraestructura verde urbana."
+      ],
+      "responsibilities_en": [
+        "Managed and disseminated climate data through the national meteorological network.",
+        "Coordinated technology initiatives with social impact (iTree, iNaturalist).",
+        "Led urban green infrastructure projects.",
+        "Performed economic modeling and valuation of urban green infrastructure."
+      ],
+      "tags": ["SIG", "iTree", "iNaturalist", "Clima", "Infraestructura verde"]
+    },
+
+    {
+      "company": "UNELLEZ & UBV",
+      "role_es": "Facilitadora",
+      "role_en": "Facilitator",
+      "location": "Barinas, Venezuela",
+      "period": "Abr 2014 - Jul 2016",
+      "responsibilities_es": [
+        "Facilitación de grupos diversos en diseño de proyectos.",
+        "Uso de plataformas digitales para interconexión y diseño curricular."
+      ],
+      "responsibilities_en": [
+        "Facilitated diverse groups in project design.",
+        "Used digital platforms for curricular design and collaboration."
+      ],
+      "tags": ["Docencia", "Proyectos", "Comunidades"]
+    },
+
+    {
+      "company": "HIDROVEN / HIDROCAPITAL / Bello Ingeniería",
+      "role_es": "Economista Ambiental",
+      "role_en": "Environmental Economist",
+      "location": "Caracas, Venezuela",
+      "period": "2006 - 2007",
+      "responsibilities_es": [
+        "Negociación y reubicación de asentamientos humanos en zona de presa.",
+        "Coordinación social en proyectos de infraestructura hídrica."
+      ],
+      "responsibilities_en": [
+        "Negotiated and relocated human settlements in dam zones.",
+        "Coordinated social aspects of water infrastructure projects."
+      ],
+      "tags": ["Economía ambiental", "Gestión social", "Infraestructura"]
+    }
+  ],
+
+  "education": [
+    {
+      "degree_es": "Programa ZIP",
+      "degree_en": "ZIP Program",
+      "institution": "42 École Urduliz",
+      "location": "Vizcaya, España",
+      "period": "Feb 2024 - Actualidad",
+      "focus_es": ["Tecnologías emergentes", "Análisis de datos", "Innovación digital"],
+      "focus_en": ["Emerging technologies", "Data analysis", "Digital innovation"]
+    }
+  ],
+
+  "publications": [
+    {
+      "title_es": "De la investigación científica al CRM con propósito ambiental",
+      "title_en": "From Scientific Research to CRM with Environmental Purpose",
+      "description_es": "Publicación internacional basada en investigación de maestría sobre preferencias de consumidores por productos ecolabelados y orgánicos en Costa Rica.",
+      "description_en": "International publication based on master's research analyzing consumer preferences for ecolabeled and organic products in Costa Rica.",
+      "details": {
+        "journal": "Quarterly Journal of International Agriculture",
+        "volume": "44",
+        "issue": "4",
+        "pages": "381–397",
+        "year": 2005,
+        "coauthor": "Dr. Robert Hearne",
+        "origin": "Master's thesis",
+        "url": "https://repositorio.catie.ac.cr/handle/11554/4512?show=full"
+      },
+      "tech_relation": {
+        "languages_used": ["Python", "R", "C"],
+        "applications": [
+          "Statistical data analysis",
+          "Preference modeling",
+          "Automation of environmental research processes"
+        ]
+      },
+      "environmental_experience": {
+        "tools": ["iTree Eco", "iNaturalist", "RBIS", "Sentinel 5P"],
+        "context": "Participation in projects with PDVSA, USAID, BID and universities, integrating citizen science, spatial data and conservation."
+      },
+      "crm_transition": {
+        "salesforce_certifications": [
+          "Associate",
+          "Administrator",
+          "Platform App Builder",
+          "Service Cloud"
+        ],
+        "description": "Applying technical and analytical background to CRM solution design with environmental impact."
+      }
+    }
+  ],
+
+  "meta": {
+    "version": 1,
+    "last_updated": "2026-02-26",
+    "source": "Unified bilingual profile for MongoDB + SML + Python API"
+  }
+}
