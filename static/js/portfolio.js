@@ -15,17 +15,23 @@ const sidebar = document.getElementById("sidebar");
 const toggle = document.getElementById("sidebar-toggle");
 const content = document.getElementById("content-wrapper");
 
-toggle.onclick = () => {
-    const isOpen = sidebar.style.left === "0px";
+// Guarded toggle: only attach handler if all elements exist to avoid runtime errors
+if (toggle && sidebar && content) {
+    toggle.addEventListener('click', () => {
+        const isOpen = sidebar.style.left === "0px";
 
-    if (isOpen) {
-        sidebar.style.left = "-260px";
-        content.classList.remove("shifted");
-    } else {
-        sidebar.style.left = "0px";
-        content.classList.add("shifted");
-    }
-};
+        if (isOpen) {
+            sidebar.style.left = "-260px";
+            content.classList.remove("shifted");
+        } else {
+            sidebar.style.left = "0px";
+            content.classList.add("shifted");
+        }
+    });
+} else {
+    // If elements are missing, log for easier debugging in browser console
+    console.warn('Sidebar toggle not attached. Elements:', { sidebar: !!sidebar, toggle: !!toggle, content: !!content });
+}
 
 
 // -----------------------------
