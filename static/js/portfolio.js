@@ -263,3 +263,172 @@ if (legacyInput && typeof chatSendBtn !== 'undefined' && chatSendBtn) {
         }
     });
 }
+
+
+// -----------------------------
+// SIDEBAR DATA VIEWERS
+// -----------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    const sidebarLinks = document.querySelectorAll('#sidebar a[data-endpoint]');
+    
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const endpoint = link.getAttribute('data-endpoint');
+            
+            // Create or find modal container
+            let modal = document.getElementById('data-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'data-modal';
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: white;
+                    padding: 30px;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+                    max-width: 800px;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    z-index: 10000;
+                    display: none;
+                `;
+                document.body.appendChild(modal);
+                
+                // Create overlay
+                const overlay = document.createElement('div');
+                overlay.id = 'modal-overlay';
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.5);
+                    z-index: 9999;
+                    display: none;
+                `;
+                overlay.addEventListener('click', () => {
+                    modal.style.display = 'none';
+                    overlay.style.display = 'none';
+                });
+                document.body.appendChild(overlay);
+            }
+            
+            const overlay = document.getElementById('modal-overlay');
+            
+            // Show modal with loading state
+            modal.innerHTML = '<div style="text-align:center;">Cargando...</div>';
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+            
+            try {
+                const response = await fetch(`${API}/${endpoint}`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                
+                // Render data based on endpoint
+                let html = `
+                    <div style="position:relative;">
+                        <button onclick="document.getElementById('data-modal').style.display='none';document.getElementById('modal-overlay').style.display='none';" 
+                                style="position:absolute;top:-10px;right:-10px;background:#e74c3c;color:white;border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:18px;line-height:1;">×</button>
+                        <h2 style="margin-top:0;color:#333;">${link.textContent}</h2>
+                `;
+                
+                if (endpoint === 'profile') {
+                    html += `
+                        <div style="line-height:1.6;">
+                            <p><strong>Nombre:</strong> ${data.name || 'N/A'}</p>
+                            <p><strong>Título:</strong> ${data.title || 'N/A'}</p>
+                            <p><strong>Resumen:</strong> ${data.summary || 'N/A'}</p>
+                            ${data.email ? `<p><strong>Email:</strong> ${data.email}</p>` : ''}
+                            ${data.phone ? `<p><strong>Teléfono:</strong> ${data.phone}</p>` : ''}
+                            ${data.location ? `<p><strong>Ubicación:</strong> ${data.location}</p>` : ''}
+                        </div>
+                    `;
+                } else if (endpoint === 'skills') {
+                    if (Array.isArray(data)) {
+                        html += '<ul style="line-height:1.8;">';
+                        data.forEach(skill => {
+                            if (typeof skill === 'string') {
+                                html += `<li>${skill}</li>`;
+                            } else if (skill.name) {
+                                html += `<li><strong>${skill.name}</strong>${skill.level ? ` - ${skill.level}` : ''}</li>`;
+                            }
+                        });
+                        html += '</ul>';
+                    } else {
+                        html += `<pre style="background:#f5f5f5;padding:15px;border-radius:8px;overflow:auto;">${JSON.stringify(data, null, 2)}</pre>`;
+                    }
+                } else if (endpoint === 'experience') {
+                    if (Array.isArray(data)) {
+                        data.forEach(exp => {
+                            html += `
+                                <div style="margin-bottom:20px;padding:15px;background:#f9f9f9;border-radius:8px;">
+                                    <h3 style="margin:0 0 10px 0;color:#4a90e2;">${exp.position || exp.title || 'Posición'}</h3>
+                                    <p style="margin:5px 0;"><strong>${exp.company || exp.organization || ''}</strong></p>
+                                    <p style="margin:5px 0;font-size:0.9em;color:#666;">${exp.period || exp.dates || ''}</p>
+                                    ${exp.description ? `<p style="margin:10px 0 0 0;">${exp.description}</p>` : ''}
+                                </div>
+                            `;
+                        });
+                    } else {
+                        html += `<pre style="background:#f5f5f5;padding:15px;border-radius:8px;overflow:auto;">${JSON.stringify(data, null, 2)}</pre>`;
+                    }
+                } else if (endpoint === 'education') {
+                    if (Array.isArray(data)) {
+                        data.forEach(edu => {
+                            html += `
+                                <div style="margin-bottom:20px;padding:15px;background:#f9f9f9;border-radius:8px;">
+                                    <h3 style="margin:0 0 10px 0;color:#4a90e2;">${edu.degree || edu.title || 'Título'}</h3>
+                                    <p style="margin:5px 0;"><strong>${edu.institution || edu.school || ''}</strong></p>
+                                    <p style="margin:5px 0;font-size:0.9em;color:#666;">${edu.year || edu.period || ''}</p>
+                                    ${edu.description ? `<p style="margin:10px 0 0 0;">${edu.description}</p>` : ''}
+                                </div>
+                            `;
+                        });
+                    } else {
+                        html += `<pre style="background:#f5f5f5;padding:15px;border-radius:8px;overflow:auto;">${JSON.stringify(data, null, 2)}</pre>`;
+                    }
+                } else if (endpoint === 'publications') {
+                    if (Array.isArray(data)) {
+                        data.forEach(pub => {
+                            html += `
+                                <div style="margin-bottom:20px;padding:15px;background:#f9f9f9;border-radius:8px;">
+                                    <h3 style="margin:0 0 10px 0;color:#4a90e2;">${pub.title || 'Publicación'}</h3>
+                                    ${pub.authors ? `<p style="margin:5px 0;"><em>${pub.authors}</em></p>` : ''}
+                                    ${pub.journal ? `<p style="margin:5px 0;"><strong>${pub.journal}</strong></p>` : ''}
+                                    ${pub.year ? `<p style="margin:5px 0;font-size:0.9em;color:#666;">${pub.year}</p>` : ''}
+                                    ${pub.description ? `<p style="margin:10px 0 0 0;">${pub.description}</p>` : ''}
+                                    ${pub.url ? `<p style="margin:10px 0 0 0;"><a href="${pub.url}" target="_blank" style="color:#4a90e2;">Ver publicación</a></p>` : ''}
+                                </div>
+                            `;
+                        });
+                    } else {
+                        html += `<pre style="background:#f5f5f5;padding:15px;border-radius:8px;overflow:auto;">${JSON.stringify(data, null, 2)}</pre>`;
+                    }
+                } else {
+                    // Generic JSON display
+                    html += `<pre style="background:#f5f5f5;padding:15px;border-radius:8px;overflow:auto;">${JSON.stringify(data, null, 2)}</pre>`;
+                }
+                
+                html += '</div>';
+                modal.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                modal.innerHTML = `
+                    <div style="position:relative;">
+                        <button onclick="document.getElementById('data-modal').style.display='none';document.getElementById('modal-overlay').style.display='none';" 
+                                style="position:absolute;top:-10px;right:-10px;background:#e74c3c;color:white;border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:18px;line-height:1;">×</button>
+                        <h2 style="color:#e74c3c;">Error</h2>
+                        <p>No se pudo cargar la información: ${error.message}</p>
+                    </div>
+                `;
+            }
+        });
+    });
+});
