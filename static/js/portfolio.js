@@ -4,6 +4,9 @@ const API = (window.location.hostname === "localhost" || window.location.hostnam
     ? window.location.origin
     : "/api";
 
+// Debug: show which API origin the client will use (visible in DevTools)
+console.log('API ->', API);
+
 
 // -----------------------------
 // PANEL LATERAL
@@ -210,5 +213,27 @@ if (inlineSend) {
                 renderError('No se pudo obtener respuesta del servidor.', () => inlineSend.click());
             })
             .finally(() => { inlineSend.disabled = false; });
+    });
+}
+
+// Allow sending with Enter key for inline input
+const inlineInput = document.getElementById('chat-inline-input');
+if (inlineInput && inlineSend) {
+    inlineInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            inlineSend.click();
+        }
+    });
+}
+
+// Allow sending with Enter key for legacy widget input (if present)
+const legacyInput = document.getElementById('chat-widget-input');
+if (legacyInput && typeof chatSendBtn !== 'undefined' && chatSendBtn) {
+    legacyInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            chatSendBtn.click();
+        }
     });
 }
