@@ -132,7 +132,7 @@
             <section>
                 <h2>Contacto</h2>
                 <ul>
-                    <li><a href="https://www.linkedin.com/in/mirel-volcan-471821b6" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
+                    <li><a href="https://www.linkedin.com/in/mirelvolcan" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
                     <li><a href="https://github.com/MirelSIG" rel="noopener noreferrer" target="_blank">GitHub</a></li>
                     <li><a href="mailto:mmvolcan@gmail.com">mmvolcan@gmail.com</a></li>
                 </ul>
@@ -141,7 +141,16 @@
         </main>
     </div>
 
-    <!-- (bottom duplicate chat-inline removed; main inline input is placed after header) -->
+    <!-- Legacy floating chat widget (kept for compatibility with JS) -->
+    <div id="chat-widget" style="display:none;">
+        <div id="chat-header">Mirel Assistant</div>
+        <div id="chat-body"></div>
+        <div id="chat-input-area">
+            <input id="chat-widget-input" placeholder="Ask a question..." />
+            <button id="chat-widget-send">Send</button>
+        </div>
+    </div>
+    <div id="chat-launcher">💬</div>
 
     <script src="/static/js/portfolio.js"></script>
 </body>
