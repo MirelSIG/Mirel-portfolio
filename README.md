@@ -2,6 +2,74 @@
 
 Portfolio web interactivo con FastAPI backend, agente de chat con IA (Ollama), y sistema de datos dinámicos.
 
+## Visión General del Proyecto
+
+### Propósito
+Portfolio interactivo profesional para Mirel Marsoli Volcán Calderón, diseñado específicamente para facilitar el proceso de reclutamiento en tecnología. El objetivo principal es demostrar cómo 20+ años de experiencia combinada en sostenibilidad, cooperación internacional, enseñanza y gestión estratégica se traduce en valor para roles tecnológicos.
+
+### Problema a Resolver
+Los recruiters tecnológicos a menudo descartan perfiles con trayectorias no lineales sin entender el valor transferible de experiencias previas. Este proyecto soluciona este problema mediante:
+
+1. **Portfolio Interactivo Bilingüe**: Presentación estructurada de información profesional en ES/EN
+2. **Agente Conversacional Inteligente**: Sistema de Q&A que responde preguntas específicas de recruiters sobre experiencia, certificaciones, habilidades técnicas y blandas
+3. **Demostración Técnica en Vivo**: El portfolio mismo es una prueba de competencias en:
+   - Backend (Python/FastAPI)
+   - Frontend (JavaScript/CSS moderno)
+   - Arquitectura de APIs RESTful
+   - Integración de IA (Ollama)
+   - DevOps (Docker/Docker Compose)
+   - Bases de datos (MongoDB)
+   
+## Conclusión
+
+Este portfolio no es solo una presentación de información, sino una **demostración técnica viva** de capacidades en:
+
+1. **Backend Development**: FastAPI, APIs RESTful, validación de datos
+2. **Frontend Development**: JavaScript moderno, DOM manipulation, async/await
+3. **AI Integration**: Ollama, prompt engineering, fallback strategies
+4. **DevOps**: Docker, docker-compose, multi-service orchestration
+5. **Architecture**: Separation of concerns, modular design, error handling
+6. **Documentation**: Este documento y todos los .md asociados
+
+El proyecto está diseñado para ser:
+- **Portable**: Funciona en cualquier OS con Docker
+- **Maintainable**: Código limpio, comentado, estructurado
+- **Extensible**: Fácil añadir features sin reescribir
+- **Resilient**: Fallbacks garantizan funcionamiento siempre
+- **Professional**: Nivel de calidad enterprise
+
+---
+
+### Stack Tecnológico
+```
+Backend:
+- Python 3.11+
+- FastAPI (framework web moderno y rápido)
+- Pydantic (validación de datos)
+- Uvicorn (servidor ASGI)
+- Ollama (biblioteca Python para IA local)
+
+Frontend:
+- Jinja2 (templating)
+- JavaScript Vanilla (sin frameworks para demostrar fundamentos)
+- CSS3 moderno (variables CSS, Grid, Flexbox)
+- Diseño responsive mobile-first
+
+Datos:
+- MongoDB Atlas (producción - opcional)
+- JSON local (desarrollo y Docker)
+
+IA:
+- Ollama (servidor local de modelos LLM)
+- Modelo: llama3.2:3b (balance entre rendimiento y recursos)
+
+Infraestructura:
+- Docker & Docker Compose (containerización multi-servicio)
+- Git/GitHub (control de versiones)
+```
+
+---
+
 ## 🚀 Métodos de Instalación
 
 ### Opción 1: Docker (Recomendado) 🐳
@@ -245,3 +313,9 @@ ollama ps                  # Local
 - 💻 Código: https://github.com/MirelSIG/SweetLab
 
 ## 🌐 Deployed Projects
+
+
+**Última actualización**: 8 de marzo de 2026
+**Versión**: 2.0
+**Autor**: Mirel Marsoli Volcán Calderón
+**Repositorio**: [github.com/MirelSIG/Mirel-portfolio](https://github.com/MirelSIG/Mirel-portfolio)

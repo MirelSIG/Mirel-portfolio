@@ -1,0 +1,261 @@
+import re
+
+def answer_question(profile: dict, question: str) -> dict:
+    """
+    Analiza la pregunta y retorna una respuesta relevante basada en el perfil.
+    """
+    question_lower = question.lower()
+    
+    # Detectar idioma de la pregunta
+    is_english = any(word in question_lower for word in ['what', 'who', 'where', 'when', 'how', 'tell me', 'describe'])
+    lang = 'en' if is_english else 'es'
+    
+    answer = ""
+    context_used = []
+    found = False
+    
+    # Patrones de preguntas y respuestas (evaluar en orden de especificidad)
+    
+    # Salesforce específicamente
+    if not found and any(word in question_lower for word in ['salesforce', 'crm', 'service cloud']):
+        if lang == 'es':
+            answer = "Mirel tiene certificaciones en Salesforce Administration, App Builder, Service Cloud y Salesforce AI Associate. Ha trabajado en automatización de procesos y diseño de flujos CRM en entornos empresariales."
+        else:
+            answer = "Mirel holds certifications in Salesforce Administration, App Builder, Service Cloud and Salesforce AI Associate. She has worked on process automation and CRM workflow design in business environments."
+        context_used.append('skills-salesforce')
+        found = True
+    
+    # Odoo específicamente
+    if not found and any(word in question_lower for word in ['odoo', 'erp']):
+        if lang == 'es':
+            answer = "Mirel tiene experiencia práctica con Odoo ERP, incluyendo desarrollo de módulos personalizados con XML, QWeb y JavaScript. Durante sus prácticas en Kernet, diseñó tres módulos Odoo y extendió el módulo OCA stock_analytic para vincular inventario con cuentas analíticas."
+        else:
+            answer = "Mirel has hands-on experience with Odoo ERP, including custom module development with XML, QWeb and JavaScript. During her internship at Kernet, she designed three Odoo modules and extended the OCA stock_analytic module to link inventory with analytic accounts."
+        context_used.append('experience-odoo')
+        found = True
+    
+    # SIG/GIS
+    if not found and any(word in question_lower for word in ['sig', 'gis', 'qgis', 'arcgis', 'geoespacial', 'geospatial', 'mapas', 'maps']):
+        if lang == 'es':
+            answer = "Mirel tiene amplia experiencia en Sistemas de Información Geográfica (SIG) con herramientas como QGIS, ArcGIS, Copernicus, iTree y Google Earth. Ha trabajado en proyectos de análisis espacial, mapeo ambiental y gestión de datos geográficos en varios países de América Latina."
+        else:
+            answer = "Mirel has extensive experience in Geographic Information Systems (GIS) with tools like QGIS, ArcGIS, Copernicus, iTree and Google Earth. She has worked on spatial analysis, environmental mapping and geographic data management projects in several Latin American countries."
+        context_used.append('skills-gis')
+        found = True
+    
+    # Desarrollo web
+    if not found and any(word in question_lower for word in ['web', 'html', 'css', 'javascript', 'frontend', 'desarrollo web']):
+        if lang == 'es':
+            answer = "Mirel es desarrolladora web con conocimientos en HTML, CSS y JavaScript. Ha completado el Bootcamp de HACK A BOSS en Desarrollo de Aplicaciones Web (2024-2025) y ha desarrollado varios proyectos web incluyendo plataformas de e-commerce, sitios culinarios y deportivos."
+        else:
+            answer = "Mirel is a web developer with skills in HTML, CSS and JavaScript. She completed the HACK A BOSS Bootcamp in Web Application Development (2024-2025) and has developed several web projects including e-commerce platforms, culinary and sports websites."
+        context_used.append('skills-webdev')
+        found = True
+    
+    # Python/programación
+    if not found and any(word in question_lower for word in ['python', 'programación', 'programming', 'código', 'code', 'lenguaje']):
+        if lang == 'es':
+            answer = "Mirel tiene experiencia en programación con Python, R, C, JavaScript, y tecnologías web (HTML, CSS). Ha trabajado en análisis de datos, automatización de procesos, desarrollo de módulos ERP y aplicaciones web."
+        else:
+            answer = "Mirel has programming experience with Python, R, C, JavaScript, and web technologies (HTML, CSS). She has worked on data analysis, process automation, ERP module development and web applications."
+        context_used.append('skills-programming')
+        found = True
+    
+    # Habilidades y tecnologías (general)
+    if not found and any(word in question_lower for word in ['habilidad', 'skill', 'tecnolog', 'technology', 'sabe', 'know', 'herramienta', 'tool']):
+        if lang == 'es':
+            answer = "Mirel tiene experiencia en múltiples áreas técnicas: Salesforce (Administration, App Builder, Service Cloud, AI Associate), Odoo (XML, QWeb, JS), desarrollo web (HTML, CSS, JavaScript), SIG (QGIS, ArcGIS), Python, R, análisis de datos y automatización de procesos."
+        else:
+            answer = "Mirel has experience in multiple technical areas: Salesforce (Administration, App Builder, Service Cloud, AI Associate), Odoo (XML, QWeb, JS), web development (HTML, CSS, JavaScript), GIS (QGIS, ArcGIS), Python, R, data analysis and process automation."
+        context_used.append('skills')
+        found = True
+    
+    # Experiencia laboral
+    if not found and any(word in question_lower for word in ['experiencia', 'experience', 'trabajo', 'work', 'compañ', 'company', 'empresa']):
+        if lang == 'es':
+            answer = "Mirel tiene más de 20 años de experiencia combinando tecnología, sostenibilidad y estrategia. Recientemente completó prácticas en Kernet (desarrollo Odoo), trabajó como freelancer para USFS/USAID en República Dominicana, y lideró proyectos en INTEC y CATIE relacionados con análisis de datos ambientales y gestión de proyectos."
+        else:
+            answer = "Mirel has over 20 years of experience combining technology, sustainability and strategy. Recently she completed an internship at Kernet (Odoo development), worked as a freelancer for USFS/USAID in Dominican Republic, and led projects at INTEC and CATIE related to environmental data analysis and project management."
+        context_used.append('experience')
+        found = True
+    
+    # Educación
+    if not found and any(word in question_lower for word in ['educación', 'education', 'estudi', 'stud', 'título', 'degree', 'formación', 'training', 'bootcamp']):
+        if lang == 'es':
+            answer = "Mirel tiene formación en Desarrollo de Aplicaciones Web (Bootcamp HACK A BOSS 2024-2025), maestría en Economía Agrícola y Manejo de Recursos Naturales (CATIE, Costa Rica), y licenciatura en Biología (UCV, Venezuela). También cuenta con certificaciones en Salesforce y múltiples cursos especializados."
+        else:
+            answer = "Mirel holds a degree in Web Application Development (Bootcamp HACK A BOSS 2024-2025), a Master's in Agricultural Economics and Natural Resources Management (CATIE, Costa Rica), and a Bachelor's in Biology (UCV, Venezuela). She also has Salesforce certifications and multiple specialized courses."
+        context_used.append('education')
+        found = True
+    
+    # Proyectos
+    if not found and any(word in question_lower for word in ['proyecto', 'project', 'portfolio', 'portafolio']):
+        if lang == 'es':
+            answer = "Mirel ha desarrollado varios proyectos web destacados: Online-commerce (plataforma de e-commerce con catálogo dinámico), Gourmet on the Go (sitio culinario con recetas), Sitio Web Deportivo Surf, y SweetLab (laboratorio UI/UX en construcción). Todos están disponibles en su GitHub."
+        else:
+            answer = "Mirel has developed several notable web projects: Online-commerce (e-commerce platform with dynamic catalog), Gourmet on the Go (culinary site with recipes), Sports Surf Website, and SweetLab (UI/UX lab under construction). All are available on her GitHub."
+        context_used.append('projects')
+        found = True
+    
+    # Idiomas
+    if not found and any(word in question_lower for word in ['idioma', 'language', 'inglés', 'english', 'español', 'spanish', 'francés', 'french', 'habla']):
+        if lang == 'es':
+            answer = "Mirel habla español (nativo), inglés (nivel B2-C1 según EFSET) y francés básico (B2). Tiene amplia experiencia trabajando en entornos multilingües y proyectos internacionales."
+        else:
+            answer = "Mirel speaks Spanish (native), English (B2-C1 level per EFSET) and basic French (B2). She has extensive experience working in multilingual environments and international projects."
+        context_used.append('languages')
+        found = True
+    
+    # Ubicación/localización
+    if not found and any(word in question_lower for word in ['ubicación', 'location', 'dónde', 'where', 'vive', 'live', 'ciudad', 'city', 'país']):
+        if lang == 'es':
+            answer = "Mirel reside actualmente en Barakaldo, Euskadi, España. Es venezolana con residencia legal en España."
+        else:
+            answer = "Mirel currently resides in Barakaldo, Euskadi, Spain. She is Venezuelan with legal residence in Spain."
+        context_used.append('location')
+        found = True
+    
+    # LinkedIn/contacto/GitHub
+    if not found and any(word in question_lower for word in ['contacto', 'contact', 'linkedin', 'github', 'email', 'correo']):
+        if lang == 'es':
+            answer = "Puedes contactar a Mirel a través de su email: mmvolcan@gmail.com, o visitar su perfil de LinkedIn (linkedin.com/in/mirelvolcan) y su GitHub (github.com/MirelSIG) donde comparte sus proyectos de desarrollo."
+        else:
+            answer = "You can contact Mirel via email: mmvolcan@gmail.com, or visit her LinkedIn profile (linkedin.com/in/mirelvolcan) and GitHub (github.com/MirelSIG) where she shares her development projects."
+        context_used.append('contact')
+        found = True
+    
+    # Pregunta general sobre quién es
+    if not found and any(word in question_lower for word in ['quién', 'who', 'eres', 'are you', 'sobre ti', 'about you', 'cuéntame', 'tell me']):
+        if lang == 'es':
+            answer = "Mirel es una profesional con más de 20 años de experiencia combinando tecnología, sostenibilidad y estrategia. Es desarrolladora web especializada en HTML, CSS, JavaScript, con experiencia en Salesforce, Odoo, análisis de datos y SIG. Ha trabajado en proyectos en España, República Dominicana, Costa Rica y Venezuela."
+        else:
+            answer = "Mirel is a professional with over 20 years of experience combining technology, sustainability and strategy. She is a web developer specialized in HTML, CSS, JavaScript, with experience in Salesforce, Odoo, data analysis and GIS. She has worked on projects in Spain, Dominican Republic, Costa Rica and Venezuela."
+        context_used.append('summary')
+        found = True
+    
+    # Respuesta por defecto si no se encontró nada específico
+    if not found:
+        if lang == 'es':
+            answer = "Mirel es una profesional versátil con experiencia en desarrollo web (HTML, CSS, JavaScript), CRM (Salesforce, Odoo), análisis de datos y SIG. Tiene más de 20 años de experiencia en proyectos tecnológicos y socioambientales. ¿Te gustaría conocer más sobre algún aspecto específico como sus habilidades, experiencia laboral, proyectos o educación?"
+        else:
+            answer = "Mirel is a versatile professional with experience in web development (HTML, CSS, JavaScript), CRM (Salesforce, Odoo), data analysis and GIS. She has over 20 years of experience in technology and socio-environmental projects. Would you like to know more about any specific aspect such as her skills, work experience, projects or education?"
+        context_used.append('general')
+    
+    return {
+        "question": question,
+        "answer": answer,
+        "respuesta": answer,  # For compatibility
+        "context_used": context_used,
+        "language_detected": lang
+    }
+
+        if lang == 'es':
+            answer = "Mirel tiene certificaciones en Salesforce Administration, App Builder, Service Cloud y Salesforce AI Associate. Ha trabajado en automatización de procesos y diseño de flujos CRM en entornos empresariales."
+        else:
+            answer = "Mirel holds certifications in Salesforce Administration, App Builder, Service Cloud and Salesforce AI Associate. She has worked on process automation and CRM workflow design in business environments."
+        context_used.append('skills-salesforce')
+    
+    # Odoo específicamente
+    elif any(word in question_lower for word in ['odoo', 'erp']):
+        if lang == 'es':
+            answer = "Mirel tiene experiencia práctica con Odoo ERP, incluyendo desarrollo de módulos personalizados con XML, QWeb y JavaScript. Durante sus prácticas en Kernet, diseñó tres módulos Odoo y extendió el módulo OCA stock_analytic para vincular inventario con cuentas analíticas."
+        else:
+            answer = "Mirel has hands-on experience with Odoo ERP, including custom module development with XML, QWeb and JavaScript. During her internship at Kernet, she designed three Odoo modules and extended the OCA stock_analytic module to link inventory with analytic accounts."
+        context_used.append('experience-odoo')
+    
+    # Experiencia laboral
+    elif any(word in question_lower for word in ['experiencia', 'experience', 'trabajo', 'work', 'compañ', 'company', 'empresa']):
+        if lang == 'es':
+            answer = "Mirel tiene más de 20 años de experiencia combinando tecnología, sostenibilidad y estrategia. Recientemente completó prácticas en Kernet (desarrollo Odoo), trabajó como freelancer para USFS/USAID en República Dominicana, y lideró proyectos en INTEC y CATIE relacionados con análisis de datos ambientales y gestión de proyectos."
+        else:
+            answer = "Mirel has over 20 years of experience combining technology, sustainability and strategy. Recently she completed an internship at Kernet (Odoo development), worked as a freelancer for USFS/USAID in Dominican Republic, and led projects at INTEC and CATIE related to environmental data analysis and project management."
+        context_used.append('experience')
+    
+    # Educación
+    elif any(word in question_lower for word in ['educación', 'education', 'estudi', 'stud', 'título', 'degree', 'formación', 'training']):
+        if lang == 'es':
+            answer = "Mirel tiene formación en Desarrollo de Aplicaciones Web (Bootcamp HACK A BOSS 2024-2025), maestría en Economía Agrícola y Manejo de Recursos Naturales (CATIE, Costa Rica), y licenciatura en Biología (UCV, Venezuela). También cuenta con certificaciones en Salesforce y múltiples cursos especializados."
+        else:
+            answer = "Mirel holds a degree in Web Application Development (Bootcamp HACK A BOSS 2024-2025), a Master's in Agricultural Economics and Natural Resources Management (CATIE, Costa Rica), and a Bachelor's in Biology (UCV, Venezuela). She also has Salesforce certifications and multiple specialized courses."
+        context_used.append('education')
+    
+    # Desarrollo web
+    elif any(word in question_lower for word in ['web', 'html', 'css', 'javascript', 'frontend', 'desarrollo web']):
+        if lang == 'es':
+            answer = "Mirel es desarrolladora web con conocimientos en HTML, CSS y JavaScript. Ha completado el Bootcamp de HACK A BOSS en Desarrollo de Aplicaciones Web (2024-2025) y ha desarrollado varios proyectos web incluyendo plataformas de e-commerce, sitios culinarios y deportivos."
+        else:
+            answer = "Mirel is a web developer with skills in HTML, CSS and JavaScript. She completed the HACK A BOSS Bootcamp in Web Application Development (2024-2025) and has developed several web projects including e-commerce platforms, culinary and sports websites."
+        context_used.append('skills-webdev')
+    
+    # Proyectos
+    elif any(word in question_lower for word in ['proyecto', 'project', 'portfolio', 'portafolio']):
+        if lang == 'es':
+            answer = "Mirel ha desarrollado varios proyectos web destacados: Online-commerce (plataforma de e-commerce con catálogo dinámico), Gourmet on the Go (sitio culinario con recetas), Sitio Web Deportivo Surf, y SweetLab (laboratorio UI/UX en construcción). Todos están disponibles en su GitHub."
+        else:
+            answer = "Mirel has developed several notable web projects: Online-commerce (e-commerce platform with dynamic catalog), Gourmet on the Go (culinary site with recipes), Sports Surf Website, and SweetLab (UI/UX lab under construction). All are available on her GitHub."
+        context_used.append('projects')
+    
+    # Idiomas
+    elif any(word in question_lower for word in ['idioma', 'language', 'inglés', 'english', 'español', 'spanish', 'francés', 'french']):
+        if lang == 'es':
+            answer = "Mirel habla español (nativo), inglés (nivel B2-C1 según EFSET) y francés básico (B2). Tiene amplia experiencia trabajando en entornos multilingües y proyectos internacionales."
+        else:
+            answer = "Mirel speaks Spanish (native), English (B2-C1 level per EFSET) and basic French (B2). She has extensive experience working in multilingual environments and international projects."
+        context_used.append('languages')
+    
+    # Ubicación/localización
+    elif any(word in question_lower for word in ['ubicación', 'location', 'dónde', 'where', 'vive', 'live', 'ciudad', 'city']):
+        if lang == 'es':
+            answer = "Mirel reside actualmente en Barakaldo, Euskadi, España. Es venezolana con residencia legal en España."
+        else:
+            answer = "Mirel currently resides in Barakaldo, Euskadi, Spain. She is Venezuelan with legal residence in Spain."
+        context_used.append('location')
+    
+    # SIG/GIS
+    elif any(word in question_lower for word in ['sig', 'gis', 'qgis', 'arcgis', 'geoespacial', 'geospatial', 'mapas', 'maps']):
+        if lang == 'es':
+            answer = "Mirel tiene amplia experiencia en Sistemas de Información Geográfica (SIG) con herramientas como QGIS, ArcGIS, Copernicus, iTree y Google Earth. Ha trabajado en proyectos de análisis espacial, mapeo ambiental y gestión de datos geográficos en varios países de América Latina."
+        else:
+            answer = "Mirel has extensive experience in Geographic Information Systems (GIS) with tools like QGIS, ArcGIS, Copernicus, iTree and Google Earth. She has worked on spatial analysis, environmental mapping and geographic data management projects in several Latin American countries."
+        context_used.append('skills-gis')
+    
+    # Python/programación
+    elif any(word in question_lower for word in ['python', 'programación', 'programming', 'código', 'code', 'desarrollo', 'development']):
+        if lang == 'es':
+            answer = "Mirel tiene experiencia en programación con Python, R, C, JavaScript, y tecnologías web (HTML, CSS). Ha trabajado en análisis de datos, automatización de procesos, desarrollo de módulos ERP y aplicaciones web."
+        else:
+            answer = "Mirel has programming experience with Python, R, C, JavaScript, and web technologies (HTML, CSS). She has worked on data analysis, process automation, ERP module development and web applications."
+        context_used.append('skills-programming')
+    
+    # LinkedIn/contacto/GitHub
+    elif any(word in question_lower for word in ['contacto', 'contact', 'linkedin', 'github', 'email', 'correo']):
+        if lang == 'es':
+            answer = "Puedes contactar a Mirel a través de su email: mmvolcan@gmail.com, o visitar su perfil de LinkedIn (linkedin.com/in/mirelvolcan) y su GitHub (github.com/MirelSIG) donde comparte sus proyectos de desarrollo."
+        else:
+            answer = "You can contact Mirel via email: mmvolcan@gmail.com, or visit her LinkedIn profile (linkedin.com/in/mirelvolcan) and GitHub (github.com/MirelSIG) where she shares her development projects."
+        context_used.append('contact')
+    
+    # Pregunta general sobre quién es
+    elif any(word in question_lower for word in ['quién', 'who', 'eres', 'are you', 'sobre ti', 'about you', 'cuéntame', 'tell me']):
+        if lang == 'es':
+            answer = "Mirel es una profesional con más de 20 años de experiencia combinando tecnología, sostenibilidad y estrategia. Es desarrolladora web especializada en HTML, CSS, JavaScript, con experiencia en Salesforce, Odoo, análisis de datos y SIG. Ha trabajado en proyectos en España, República Dominicana, Costa Rica y Venezuela."
+        else:
+            answer = "Mirel is a professional with over 20 years of experience combining technology, sustainability and strategy. She is a web developer specialized in HTML, CSS, JavaScript, with experience in Salesforce, Odoo, data analysis and GIS. She has worked on projects in Spain, Dominican Republic, Costa Rica and Venezuela."
+        context_used.append('summary')
+    
+    # Respuesta por defecto
+    else:
+        if lang == 'es':
+            answer = "Mirel es una profesional versátil con experiencia en desarrollo web (HTML, CSS, JavaScript), CRM (Salesforce, Odoo), análisis de datos y SIG. Tiene más de 20 años de experiencia en proyectos tecnológicos y socioambientales. ¿Te gustaría conocer más sobre algún aspecto específico de su experiencia?"
+        else:
+            answer = "Mirel is a versatile professional with experience in web development (HTML, CSS, JavaScript), CRM (Salesforce, Odoo), data analysis and GIS. She has over 20 years of experience in technology and socio-environmental projects. Would you like to know more about any specific aspect of her experience?"
+        context_used.append('general')
+    
+    return {
+        "question": question,
+        "answer": answer,
+        "respuesta": answer,  # For compatibility
+        "context_used": context_used,
+        "language_detected": lang
+    }
+
