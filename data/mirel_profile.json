@@ -5,7 +5,7 @@
     "full_name": "Mirel Marsoli Volcán Calderón",
     "email": "mmvolcan@gmail.com",
     "location": {
-      "city": "Barakaldo",
+      "city": "Bilbao - Txurdinaga CP 48004",
       "region": "Euskadi",
       "country": "España"
     },
@@ -14,12 +14,12 @@
       "es": {
         "español": "Nativo",
         "inglés": "B2 - C1 según EFSET",
-        "francés": "Básico (B2)"
+        "francés": "Básico (B1–B2)"
       },
       "en": {
         "spanish": "Native",
         "english": "B2–C1 (EFSET)",
-        "french": "Basic (B2)"
+        "french": "Basic (B1–B2)"
       }
     },
     "links": {
@@ -79,7 +79,7 @@
         "C programming"
       ]
     },
-    "soft": {
+    "skills": {
       "es": [
         "Liderazgo colaborativo",
         "Gestión de proyectos",
@@ -196,13 +196,55 @@
 
   "education": [
     {
+      "degree_es": "Bootcamp Desarrollo Web Fullstack",
+      "degree_en": "Fullstack Web Development Bootcamp",
+      "institution": "Peñascal - Somos F5",
+      "location": "Bilbao, España",
+      "period": "Oct 2025 - Actualidad",
+      "focus_es": ["Desarrollo web fullstack", "Programación agéntica con Ollama", "Open Code", "Metodologías ágiles"],
+      "focus_en": ["Fullstack web development", "Agentic programming with Ollama", "Open Code", "Agile methodologies"]
+    },
+    {
       "degree_es": "Programa ZIP",
       "degree_en": "ZIP Program",
       "institution": "42 École Urduliz",
       "location": "Vizcaya, España",
-      "period": "Feb 2024 - Actualidad",
+      "period": "Feb 2024 - Oct 2025",
       "focus_es": ["Tecnologías emergentes", "Análisis de datos", "Innovación digital"],
       "focus_en": ["Emerging technologies", "Data analysis", "Digital innovation"]
+    }
+  ],
+
+  "certifications": [
+    {
+      "name": "Salesforce Associate",
+      "issuer": "Salesforce",
+      "date": "2024",
+      "type": "CRM"
+    },
+    {
+      "name": "Salesforce Administrator",
+      "issuer": "Salesforce",
+      "date": "2024",
+      "type": "CRM"
+    },
+    {
+      "name": "Salesforce App Builder",
+      "issuer": "Salesforce",
+      "date": "2024",
+      "type": "CRM"
+    },
+    {
+      "name": "Service Cloud",
+      "issuer": "Salesforce",
+      "date": "2024",
+      "type": "CRM"
+    },
+    {
+      "name": "Salesforce AI Associate",
+      "issuer": "Salesforce",
+      "date": "2025",
+      "type": "AI/CRM"
     }
   ],
 

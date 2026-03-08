@@ -8,5 +8,6 @@ class Profile(BaseModel):
     skills: Dict[str, Dict[str, List[str]]]
     experience: List[Dict[str, Any]]
     education: List[Dict[str, Any]]
+    certifications: Optional[List[Dict[str, Any]]] = []
     publications: List[Dict[str, Any]]
     meta: Dict[str, Any]

@@ -19,33 +19,82 @@ window.addEventListener('unhandledrejection', (ev) => {
 // -----------------------------
 // PANEL LATERAL
 // -----------------------------
-const sidebar = document.getElementById("sidebar");
-const toggle = document.getElementById("sidebar-toggle");
-const content = document.getElementById("content-wrapper");
+// Mover todo el código de inicialización del DOM aquí
+document.addEventListener('DOMContentLoaded', () => {
+    // Sidebar toggle
+    const sidebar = document.getElementById("sidebar");
+    const toggle = document.getElementById("sidebar-toggle");
+    const content = document.getElementById("content-wrapper");
 
-// Guarded toggle: only attach handler if all elements exist to avoid runtime errors
-if (toggle && sidebar && content) {
-    toggle.addEventListener('click', () => {
-        const isOpen = sidebar.style.left === "0px";
+    if (toggle && sidebar && content) {
+        console.log('Sidebar toggle elements found and ready');
+        
+        toggle.addEventListener('click', () => {
+            console.log('Toggle clicked, current left:', sidebar.style.left);
+            const isOpen = sidebar.style.left === "0px";
 
-        if (isOpen) {
-            sidebar.style.left = "-260px";
-            content.classList.remove("shifted");
-        } else {
-            sidebar.style.left = "0px";
-            content.classList.add("shifted");
-        }
-    });
-} else {
-    // If elements are missing, log for easier debugging in browser console
-    console.warn('Sidebar toggle not attached. Elements:', { sidebar: !!sidebar, toggle: !!toggle, content: !!content });
-}
+            if (isOpen) {
+                sidebar.style.left = "-260px";
+                content.classList.remove("shifted");
+                console.log('Sidebar closed');
+            } else {
+                sidebar.style.left = "0px";
+                content.classList.add("shifted");
+                console.log('Sidebar opened');
+            }
+        });
+    } else {
+        console.warn('Sidebar toggle not attached. Elements:', { sidebar: !!sidebar, toggle: !!toggle, content: !!content });
+    }
 
+    // Chat widget launcher
+    const widget = document.getElementById("chat-widget");
+    const launcher = document.getElementById("chat-launcher");
 
+    if (launcher && widget) {
+        launcher.onclick = () => {
+            widget.style.display = widget.style.display === "flex" ? "none" : "flex";
+        };
+        console.log('Chat launcher attached');
+    }
+
+    // Chat send button
+    const chatSendBtn = document.getElementById("chat-widget-send");
+
+    if (chatSendBtn) {
+        chatSendBtn.onclick = async () => {
+            const input = document.getElementById('chat-widget-input');
+            if (!input) return;
+            const text = input.value.trim();
+            if (!text) return;
+
+            renderUserMessage(text);
+            input.value = '';
+
+            const loadingEl = showLoading();
+            chatSendBtn.disabled = true;
+
+            try {
+                const answer = await sendQuestion(text);
+                hideLoading(loadingEl);
+                renderBotMessage(answer);
+            } catch (err) {
+                hideLoading(loadingEl);
+                console.error('sendQuestion error:', err);
+                const msg = err && err.message ? `Error: ${err.message}` : 'No se pudo obtener respuesta del servidor.';
+                renderError(msg, () => {
+                    chatSendBtn.click();
+                });
+            } finally {
+                chatSendBtn.disabled = false;
+            }
+        };
+        console.log('Chat send button attached');
+    }
+});
 // -----------------------------
 // WIDGET DE CHAT (refactor: UI vs HTTP client)
 // -----------------------------
-const chatSendBtn = document.getElementById("chat-widget-send");
 
 // --- UI helpers (pure DOM manipulation) ---
 function getChatBody() {
@@ -117,50 +166,10 @@ async function sendQuestion(text) {
     return typeof data === 'string' ? data : (data.answer || data.respuesta || data.example_answer || JSON.stringify(data));
 }
 
-// --- Wiring ---
-if (chatSendBtn) {
-    chatSendBtn.onclick = async () => {
-        const input = document.getElementById('chat-widget-input');
-        if (!input) return;
-        const text = input.value.trim();
-        if (!text) return;
-
-        renderUserMessage(text);
-        input.value = '';
-
-        const loadingEl = showLoading();
-        chatSendBtn.disabled = true;
-
-        try {
-            const answer = await sendQuestion(text);
-            hideLoading(loadingEl);
-            renderBotMessage(answer);
-        } catch (err) {
-            hideLoading(loadingEl);
-            console.error('sendQuestion error:', err);
-            const msg = err && err.message ? `Error: ${err.message}` : 'No se pudo obtener respuesta del servidor.';
-            renderError(msg, () => {
-                // retry: simulate user clicking send again
-                chatSendBtn.click();
-            });
-        } finally {
-            chatSendBtn.disabled = false;
-        }
-    };
-}
-
 
 // -----------------------------
-// ABRIR / CERRAR WIDGET (legacy modal: guarded)
+// ABRIR / CERRAR WIDGET - Ya está en DOMContentLoaded arriba
 // -----------------------------
-const widget = document.getElementById("chat-widget");
-const launcher = document.getElementById("chat-launcher");
-
-if (launcher && widget) {
-    launcher.onclick = () => {
-        widget.style.display = widget.style.display === "flex" ? "none" : "flex";
-    };
-}
 
 
 // -----------------------------
@@ -339,76 +348,87 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 
                 if (endpoint === 'profile') {
+                    const info = data.personal_info || {};
+                    const location = info.location || {};
+                    const summaryLines = data.summary?.es || [];
                     html += `
                         <div style="line-height:1.6;">
-                            <p><strong>Nombre:</strong> ${data.name || 'N/A'}</p>
-                            <p><strong>Título:</strong> ${data.title || 'N/A'}</p>
-                            <p><strong>Resumen:</strong> ${data.summary || 'N/A'}</p>
-                            ${data.email ? `<p><strong>Email:</strong> ${data.email}</p>` : ''}
-                            ${data.phone ? `<p><strong>Teléfono:</strong> ${data.phone}</p>` : ''}
-                            ${data.location ? `<p><strong>Ubicación:</strong> ${data.location}</p>` : ''}
+                            <p><strong>Nombre:</strong> ${info.full_name || 'N/A'}</p>
+                            ${info.email ? `<p><strong>Email:</strong> ${info.email}</p>` : ''}
+                            ${location.city ? `<p><strong>Ubicación:</strong> ${location.city}, ${location.region || ''}, ${location.country || ''}</p>` : ''}
+                            ${summaryLines.length > 0 ? `<div style="margin-top:15px;"><strong>Resumen:</strong><ul style="margin-top:10px;">${summaryLines.map(line => `<li style="margin-bottom:8px;">${line}</li>`).join('')}</ul></div>` : ''}
                         </div>
                     `;
                 } else if (endpoint === 'skills') {
-                    if (Array.isArray(data)) {
-                        html += '<ul style="line-height:1.8;">';
-                        data.forEach(skill => {
-                            if (typeof skill === 'string') {
-                                html += `<li>${skill}</li>`;
-                            } else if (skill.name) {
-                                html += `<li><strong>${skill.name}</strong>${skill.level ? ` - ${skill.level}` : ''}</li>`;
-                            }
+                    const technical = data.technical?.es || [];
+                    const soft = data.skills?.es || [];
+                    
+                    if (technical.length > 0) {
+                        html += '<h3 style="color:#4a90e2;margin-top:20px;">Habilidades Técnicas</h3>';
+                        html += '<ul style="line-height:1.8;columns:2;-webkit-columns:2;-moz-columns:2;">';
+                        technical.forEach(skill => {
+                            html += `<li style="break-inside:avoid;page-break-inside:avoid;">${skill}</li>`;
                         });
                         html += '</ul>';
-                    } else {
-                        html += `<pre style="background:#f5f5f5;padding:15px;border-radius:8px;overflow:auto;">${JSON.stringify(data, null, 2)}</pre>`;
+                    }
+                    
+                    if (soft.length > 0) {
+                        html += '<h3 style="color:#4a90e2;margin-top:20px;">Habilidades Blandas</h3>';
+                        html += '<ul style="line-height:1.8;">';
+                        soft.forEach(skill => {
+                            html += `<li>${skill}</li>`;
+                        });
+                        html += '</ul>';
                     }
                 } else if (endpoint === 'experience') {
                     if (Array.isArray(data)) {
                         data.forEach(exp => {
+                            const responsibilities = exp.responsibilities_es || [];
                             html += `
                                 <div style="margin-bottom:20px;padding:15px;background:#f9f9f9;border-radius:8px;">
-                                    <h3 style="margin:0 0 10px 0;color:#4a90e2;">${exp.position || exp.title || 'Posición'}</h3>
-                                    <p style="margin:5px 0;"><strong>${exp.company || exp.organization || ''}</strong></p>
-                                    <p style="margin:5px 0;font-size:0.9em;color:#666;">${exp.period || exp.dates || ''}</p>
-                                    ${exp.description ? `<p style="margin:10px 0 0 0;">${exp.description}</p>` : ''}
+                                    <h3 style="margin:0 0 10px 0;color:#4a90e2;">${exp.role_es || exp.role_en || 'Posición'}</h3>
+                                    <p style="margin:5px 0;"><strong>${exp.company || ''}</strong></p>
+                                    <p style="margin:5px 0;font-size:0.9em;color:#666;">${exp.location || ''} | ${exp.period || ''}</p>
+                                    ${responsibilities.length > 0 ? `<ul style="margin:10px 0 0 0;font-size:0.95em;line-height:1.6;">${responsibilities.map(r => `<li>${r}</li>`).join('')}</ul>` : ''}
                                 </div>
                             `;
                         });
                     } else {
-                        html += `<pre style="background:#f5f5f5;padding:15px;border-radius:8px;overflow:auto;">${JSON.stringify(data, null, 2)}</pre>`;
+                        html += '<p>No hay experiencia disponible.</p>';
                     }
                 } else if (endpoint === 'education') {
                     if (Array.isArray(data)) {
                         data.forEach(edu => {
+                            const focus = edu.focus_es || [];
                             html += `
                                 <div style="margin-bottom:20px;padding:15px;background:#f9f9f9;border-radius:8px;">
-                                    <h3 style="margin:0 0 10px 0;color:#4a90e2;">${edu.degree || edu.title || 'Título'}</h3>
-                                    <p style="margin:5px 0;"><strong>${edu.institution || edu.school || ''}</strong></p>
-                                    <p style="margin:5px 0;font-size:0.9em;color:#666;">${edu.year || edu.period || ''}</p>
-                                    ${edu.description ? `<p style="margin:10px 0 0 0;">${edu.description}</p>` : ''}
+                                    <h3 style="margin:0 0 10px 0;color:#4a90e2;">${edu.degree_es || edu.degree_en || 'Título'}</h3>
+                                    <p style="margin:5px 0;"><strong>${edu.institution || ''}</strong></p>
+                                    <p style="margin:5px 0;font-size:0.9em;color:#666;">${edu.location || ''} | ${edu.period || ''}</p>
+                                    ${focus.length > 0 ? `<p style="margin:10px 0 0 0;font-size:0.95em;"><strong>Enfoque:</strong> ${focus.join(', ')}</p>` : ''}
                                 </div>
                             `;
                         });
                     } else {
-                        html += `<pre style="background:#f5f5f5;padding:15px;border-radius:8px;overflow:auto;">${JSON.stringify(data, null, 2)}</pre>`;
+                        html += '<p>No hay educación disponible.</p>';
                     }
                 } else if (endpoint === 'publications') {
                     if (Array.isArray(data)) {
                         data.forEach(pub => {
+                            const details = pub.details || {};
                             html += `
                                 <div style="margin-bottom:20px;padding:15px;background:#f9f9f9;border-radius:8px;">
-                                    <h3 style="margin:0 0 10px 0;color:#4a90e2;">${pub.title || 'Publicación'}</h3>
-                                    ${pub.authors ? `<p style="margin:5px 0;"><em>${pub.authors}</em></p>` : ''}
-                                    ${pub.journal ? `<p style="margin:5px 0;"><strong>${pub.journal}</strong></p>` : ''}
-                                    ${pub.year ? `<p style="margin:5px 0;font-size:0.9em;color:#666;">${pub.year}</p>` : ''}
-                                    ${pub.description ? `<p style="margin:10px 0 0 0;">${pub.description}</p>` : ''}
-                                    ${pub.url ? `<p style="margin:10px 0 0 0;"><a href="${pub.url}" target="_blank" style="color:#4a90e2;">Ver publicación</a></p>` : ''}
+                                    <h3 style="margin:0 0 10px 0;color:#4a90e2;">${pub.title_es || pub.title_en || 'Publicación'}</h3>
+                                    ${pub.description_es ? `<p style="margin:10px 0;font-size:0.95em;line-height:1.6;">${pub.description_es}</p>` : ''}
+                                    ${details.journal ? `<p style="margin:5px 0;"><strong>Revista:</strong> ${details.journal}</p>` : ''}
+                                    ${details.year ? `<p style="margin:5px 0;"><strong>Año:</strong> ${details.year}</p>` : ''}
+                                    ${details.coauthor ? `<p style="margin:5px 0;"><strong>Coautor:</strong> ${details.coauthor}</p>` : ''}
+                                    ${details.url ? `<p style="margin:10px 0;"><a href="${details.url}" target="_blank" style="color:#4a90e2;text-decoration:none;">➡ Ver publicación</a></p>` : ''}
                                 </div>
                             `;
                         });
                     } else {
-                        html += `<pre style="background:#f5f5f5;padding:15px;border-radius:8px;overflow:auto;">${JSON.stringify(data, null, 2)}</pre>`;
+                        html += '<p>No hay publicaciones disponibles.</p>';
                     }
                 } else {
                     // Generic JSON display

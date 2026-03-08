@@ -17,7 +17,7 @@
             <li><a href="#" data-endpoint="skills">Skills</a></li>
             <li><a href="#" data-endpoint="education">Education</a></li>
             <li><a href="#" data-endpoint="publications">Publications</a></li>
-            <li><a href="/docs" rel="noopener noreferrer" target="_blank">Documentation (Swagger)</a></li>
+            <li><a href="#proyectos">Projects</a></li>
         </ul>
     </div>
 
@@ -32,16 +32,6 @@
             <h3>Web Developer | HTML | CSS | JavaScript | Salesforce | Odoo</h3>
             <div><a href="/" class="lang-switch">Español</a></div>
         </header>
-
-        <!-- INLINE CHAT INPUT (moved here for consistent placement) -->
-        <div id="chat-inline" style="max-width:900px;margin:20px auto 0;">
-            <div id="chat-inline-header" style="font-weight:bold;margin-bottom:8px;">Mirel's Assistant</div>
-            <div id="chat-inline-body" style="min-height:80px;padding:8px;background:#fff;border-radius:8px;border:1px solid #e6e6e6;margin-bottom:8px;overflow:auto;"></div>
-            <div id="chat-inline-input-area" style="display:flex;gap:8px;">
-                <input type="text" id="chat-inline-input" placeholder="Ask me about my experience, skills or projects..." style="flex:1;padding:10px;border-radius:6px;border:1px solid #ccc;" />
-                <button id="chat-inline-send" style="background:#4a90e2;color:#fff;border:none;padding:10px 14px;border-radius:6px;cursor:pointer;">Send</button>
-            </div>
-        </div>
 
         <main>
                 <h2>About me</h2>
@@ -128,17 +118,16 @@
         </main>
     </div>
 
-    <!-- Legacy floating chat widget (kept for compatibility with JS) -->
+    <!-- Floating chat widget -->
     <div id="chat-widget" style="display:none;">
-        <div id="chat-header">Mirel Assistant</div>
+        <div id="chat-header">Mirel's Assistant</div>
         <div id="chat-body"></div>
         <div id="chat-input-area">
-            <input id="chat-widget-input" placeholder="Ask a question..." />
+            <input id="chat-widget-input" placeholder="Ask me something..." />
             <button id="chat-widget-send">Send</button>
         </div>
     </div>
-    <!-- Hide legacy launcher in EN to prefer inline assistant -->
-    <div id="chat-launcher" style="display:none;">💬</div>
+    <div id="chat-launcher">💬</div>
 
     <script src="/static/js/portfolio_EN.js"></script>
 </body>
