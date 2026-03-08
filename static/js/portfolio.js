@@ -1,8 +1,6 @@
 // Detectar entorno: local o Render
-// Use the page origin when running locally so fetch calls hit the same server
-const API = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
-    ? window.location.origin
-    : "/api";
+// Use the page origin for all API calls (endpoints are at root level)
+const API = window.location.origin;
 
 // Debug: show which API origin the client will use (visible in DevTools)
 console.log('API ->', API);
