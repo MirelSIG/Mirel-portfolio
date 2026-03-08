@@ -12,24 +12,13 @@ Los recruiters tecnológicos a menudo descartan perfiles con trayectorias no lin
 
 1. **Portfolio Interactivo Bilingüe**: Presentación estructurada de información profesional en ES/EN
 2. **Agente Conversacional Inteligente**: Sistema de Q&A que responde preguntas específicas de recruiters sobre experiencia, certificaciones, habilidades técnicas y blandas
-3. **Demostración Técnica en Vivo**: El portfolio mismo es una prueba de competencias en:
-   - Backend (Python/FastAPI)
-   - Frontend (JavaScript/CSS moderno)
-   - Arquitectura de APIs RESTful
-   - Integración de IA (Ollama)
-   - DevOps (Docker/Docker Compose)
-   - Bases de datos (MongoDB)
-   
-## Conclusión
+3. **Demostración Técnica en Vivo**: Este portfolio no es solo una presentación de información, sino una **demostración técnica viva** de capacidades en:
 
-Este portfolio no es solo una presentación de información, sino una **demostración técnica viva** de capacidades en:
-
-1. **Backend Development**: FastAPI, APIs RESTful, validación de datos
-2. **Frontend Development**: JavaScript moderno, DOM manipulation, async/await
-3. **AI Integration**: Ollama, prompt engineering, fallback strategies
-4. **DevOps**: Docker, docker-compose, multi-service orchestration
-5. **Architecture**: Separation of concerns, modular design, error handling
-6. **Documentation**: Este documento y todos los .md asociados
+    - **Backend Development**: FastAPI, APIs RESTful, validación de datos
+    - **Frontend Development**: JavaScript moderno, DOM manipulation, async/await
+    - **AI Integration**: Ollama, prompt engineering, fallback strategies
+    - **DevOps**: Docker, docker-compose, multi-service orchestration. **Architecture**: Separation of concerns, modular design, error handling
+    - **Documentation**: Este documento y todos los .md asociados
 
 El proyecto está diseñado para ser:
 - **Portable**: Funciona en cualquier OS con Docker
