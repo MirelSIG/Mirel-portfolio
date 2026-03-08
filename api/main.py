@@ -20,6 +20,15 @@ def home(request: Request):
 def home_en(request: Request):
     return templates.TemplateResponse("portfolio_EN.html", {"request": request})
 
+@app.get("/health")
+def health_check():
+    """Endpoint para health check de Render y monitoreo"""
+    return {
+        "status": "healthy",
+        "service": "mirel-portfolio",
+        "version": "2.0"
+    }
+
 # Intentar cargar desde Atlas
 profile_data = get_profile_from_atlas()
 

@@ -23,6 +23,9 @@ Thumbs.db
 # Archivos de Render
 render.yaml
 
+# Documentación privada
+PROJECT_KNOWHOW.md
+
 # Archivos de Node (si algún proyecto lo usa)
 node_modules/
 

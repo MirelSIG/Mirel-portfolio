@@ -2,6 +2,18 @@
 
 Portfolio web interactivo con FastAPI backend, agente de chat con IA (Ollama), y sistema de datos dinámicos.
 
+## 🌐 Ver Portfolio en Vivo
+
+**👉 Despliegue en progreso - [Instrucciones aquí](RENDER_DEPLOY.md)**
+
+> Portfolio interactivo con FastAPI backend y agente conversacional inteligente. 
+> Despliega en Render.com para acceso público con todas las funcionalidades.
+
+**Links**:
+- 🚀 **Producción**: `https://mirel-portfolio.onrender.com` (configurar según RENDER_DEPLOY.md)
+- 📦 **Repositorio**: [github.com/MirelSIG/Mirel-portfolio](https://github.com/MirelSIG/Mirel-portfolio)
+- 📖 **Documentación Técnica**: [PROJECT_KNOWHOW.md](PROJECT_KNOWHOW.md)
+
 ## Visión General del Proyecto
 
 ### Propósito
@@ -238,7 +250,11 @@ pip install -r requirements.txt
 
 ## 🌍 Deploy en Producción
 
-### Con Docker
+### Opción 1: Render.com (Recomendado - Free Tier)
+
+Despliegue completo con backend funcionando. Ver guía completa: [RENDER_DEPLOY.md](RENDER_DEPLOY.md)
+
+### Opción 2: Con Docker
 
 1. En servidor con Docker instalado:
 ```bash
@@ -249,14 +265,20 @@ docker-compose up -d
 
 2. Configurar nginx como proxy reverso (opcional).
 
-### Sin Docker
+### Opción 3: Sin Docker
 
 Ver documentación de [FastAPI deployment](https://fastapi.tiangolo.com/deployment/).
 
+### Otras Opciones
+
+Railway, AWS EC2, DigitalOcean App Platform - Ver [PROJECT_KNOWHOW.md](PROJECT_KNOWHOW.md#desplegar-a-producción)
+
 ## 📚 Documentación Adicional
 
-- [Configuración Docker](DOCKER_SETUP.md)
-- [Configuración Ollama](OLLAMA_SETUP.md)
+- **[Know-How Completo](PROJECT_KNOWHOW.md)** - Arquitectura, decisiones técnicas, deployment
+- **[Configuración Docker](DOCKER_SETUP.md)** - Setup multi-servicio con Ollama
+- **[Configuración Ollama](OLLAMA_SETUP.md)** - IA conversacional local
+- **[Deploy en Render](RENDER_DEPLOY.md)** - Guía paso a paso para producción
 
 ## 🐛 Troubleshooting
 
