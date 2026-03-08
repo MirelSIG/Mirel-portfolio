@@ -250,7 +250,8 @@ def answer_question(profile: dict, question: str) -> dict:
     
     # Transición a tecnología / Por qué tech
     elif any(w in q for w in ['transici', 'transition', 'cambio', 'change', 'migra', 'por que tech', 'why tech', 'por qué', 'tecnolog', 'software']):
-        answer = f"{'La transición de Mirel hacia el desarrollo de software es una evolución natural de su trayectoria' if lang == 'es' else 'Mirel\\'s transition to software development is a natural evolution of her trajectory'}:\n\n"
+        en_text = "Mirel's transition to software development is a natural evolution of her trajectory"
+        answer = f"{'La transición de Mirel hacia el desarrollo de software es una evolución natural de su trayectoria' if lang == 'es' else en_text}:\n\n"
         answer += f"{'• Siempre ha usado tecnología: Python, R y SIG para análisis de datos ambientales, modelado económico e investigación científica' if lang == 'es' else '• Has always used technology: Python, R and GIS for environmental data analysis, economic modeling and scientific research'}\n"
         answer += f"{'• Gestionó bases de datos climáticas y redes meteorológicas, requiriendo automatización y procesamiento de grandes volúmenes de datos' if lang == 'es' else '• Managed climate databases and meteorological networks, requiring automation and large-scale data processing'}\n"
         answer += f"{'• Coordinó proyectos complejos con múltiples stakeholders, equipos multidisciplinarios y objetivos técnicos' if lang == 'es' else '• Coordinated complex projects with multiple stakeholders, multidisciplinary teams and technical objectives'}\n"
