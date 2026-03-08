@@ -5,7 +5,7 @@ Portfolio web interactivo con FastAPI backend, agente de chat con IA (Ollama), y
 ## Visión General del Proyecto
 
 ### Propósito
-Portfolio interactivo profesional para Mirel Marsoli Volcán Calderón, diseñado específicamente para facilitar el proceso de reclutamiento en tecnología. El objetivo principal es demostrar cómo 20+ años de experiencia combinada en sostenibilidad, cooperación internacional, enseñanza y gestión estratégica se traduce en valor para roles tecnológicos.
+Portfolio interactivo profesional de Mirel Marsoli Volcán Calderón, diseñado específicamente para facilitar el proceso de reclutamiento en tecnología. El objetivo principal es demostrar cómo 20+ años de experiencia combinada en sostenibilidad, cooperación internacional, enseñanza y gestión estratégica se traduce en valor para roles tecnológicos.
 
 ### Problema a Resolver
 Los recruiters tecnológicos a menudo descartan perfiles con trayectorias no lineales sin entender el valor transferible de experiencias previas. Este proyecto soluciona este problema mediante:
