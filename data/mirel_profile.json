@@ -288,6 +288,21 @@
     }
   ],
 
+  "projects": [
+    {
+      "title": "Mirel-portfolio",
+      "description": "Portfolio profesional (backend en Render)",
+      "url": "https://mirel-portfolio.onrender.com",
+      "repo": "https://github.com/MirelSIG/Mirel-portfolio"
+    },
+    {
+      "title": "Money Link",
+      "description": "Aplicación fullstack de gestión financiera con autenticación y dashboard.",
+      "url": "https://money-link.onrender.com",
+      "repo": "https://github.com/MirelSIG/Money_Link"
+    }
+  ],
+
   "meta": {
     "version": 1,
     "last_updated": "2026-02-26",
