@@ -57,10 +57,10 @@ def replace_profile_in_atlas(profile_data: dict) -> dict | None:
         if not profile_id:
             return None
 
-        result = collection.replace_one({"id": profile_id}, profile_data, upsert=False)
-        if result.matched_count == 0:
-            return None
+        # Use upsert=True so the document is created if it doesn't exist.
+        result = collection.replace_one({"id": profile_id}, profile_data, upsert=True)
 
+        # Retrieve the updated/created document to return it.
         updated_doc = collection.find_one({"id": profile_id})
         if updated_doc and "_id" in updated_doc:
             updated_doc["_id"] = str(updated_doc["_id"])
