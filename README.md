@@ -181,6 +181,7 @@ Mirel-portfolio/
 - `GET /` - Página principal (español)
 - `GET /en` - Página principal (inglés)
 - `GET /profile` - Información personal
+- `PUT /admin/profile/{profile_id}` - Actualiza el perfil en MongoDB Atlas con `X-API-Key`
 - `GET /skills` - Habilidades técnicas y blandas
 - `GET /experience` - Experiencia laboral
 - `GET /education` - Formación académica
@@ -205,6 +206,22 @@ Mirel-portfolio/
 - Docker & Docker Compose
 - Uvicorn
 - Git
+
+## 🔐 Actualización segura en MongoDB
+
+El endpoint de escritura en Atlas requiere configurar una clave administrativa en el entorno:
+
+```env
+ADMIN_API_KEY=una_clave_larga_y_unica
+```
+
+Para actualizar el documento del perfil, envía una petición `PUT` al endpoint `/admin/profile/{profile_id}` con el header:
+
+```http
+X-API-Key: una_clave_larga_y_unica
+```
+
+El cuerpo debe contener el perfil completo con la misma estructura del modelo `Profile`.
 
 ## 🧪 Testing
 

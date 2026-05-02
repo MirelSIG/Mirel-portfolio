@@ -1,11 +1,13 @@
+import hmac
+
 from fastapi import FastAPI
 from api.models.profile_model import Profile
 from api.services.qa_service import answer_question
 from api.db_local import load_local_profile
-from api.db_atlas import get_profile_from_atlas
+from api.db_atlas import ADMIN_API_KEY, get_profile_from_atlas, replace_profile_in_atlas
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
+from fastapi import Depends, Header, HTTPException, Request, status
 from pathlib import Path
 
 app = FastAPI(title="Mirel Portfolio API")
@@ -44,9 +46,49 @@ if not profile_data:
 
 profile = Profile(**profile_data)
 
+
+def verify_admin_api_key(x_api_key: str = Header(default="")):
+    """Protege endpoints de escritura con una API key configurada en el entorno."""
+    if not ADMIN_API_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Admin API key not configured",
+        )
+
+    if not hmac.compare_digest(x_api_key, ADMIN_API_KEY):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid API key",
+        )
+
 @app.get("/profile")
 def get_profile():
     return profile
+
+
+@app.put("/admin/profile/{profile_id}")
+def update_profile(profile_id: str, payload: Profile, _: None = Depends(verify_admin_api_key)):
+    """Actualiza el documento del perfil en MongoDB Atlas de forma autenticada."""
+    if payload.id != profile_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Path profile_id does not match payload id",
+        )
+
+    updated_profile = replace_profile_in_atlas(payload.model_dump(mode="json"))
+    if not updated_profile:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Profile not found or database not available",
+        )
+
+    global profile
+    profile = Profile(**updated_profile)
+
+    return {
+        "status": "updated",
+        "profile": profile,
+    }
 
 @app.get("/skills")
 def get_skills():
