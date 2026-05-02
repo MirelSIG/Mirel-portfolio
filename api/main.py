@@ -20,11 +20,11 @@ templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 
 @app.get("/")
 def home(request: Request):
-    return templates.TemplateResponse("portfolio.html", {"request": request})
+    return templates.TemplateResponse(request, "portfolio.html")
 
 @app.get("/en")
 def home_en(request: Request):
-    return templates.TemplateResponse("portfolio_EN.html", {"request": request})
+    return templates.TemplateResponse(request, "portfolio_EN.html")
 
 @app.get("/health")
 def health_check():
