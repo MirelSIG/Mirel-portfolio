@@ -212,13 +212,13 @@ Mirel-portfolio/
 El endpoint de escritura en Atlas requiere configurar una clave administrativa en el entorno:
 
 ```env
-ADMIN_API_KEY=una_clave_larga_y_unica
+ADMIN_API_KEY=<REPLACE_WITH_YOUR_ADMIN_API_KEY>
 ```
 
 Para actualizar el documento del perfil, envía una petición `PUT` al endpoint `/admin/profile/{profile_id}` con el header:
 
 ```http
-X-API-Key: una_clave_larga_y_unica
+X-API-Key: <REPLACE_WITH_YOUR_ADMIN_API_KEY>
 ```
 
 El cuerpo debe contener el perfil completo con la misma estructura del modelo `Profile`.
