@@ -35,3 +35,6 @@ build/
 
 # Carpeta de dependencias globales (NO subir)
 site-packages/
+
+# Entorno: variables sensibles
+.env
